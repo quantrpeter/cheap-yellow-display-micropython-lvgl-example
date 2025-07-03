@@ -1,7 +1,9 @@
 import lcd_bus
 from micropython import const
 import machine
-
+import ili9341
+import lvgl as lv
+from time import sleep
 
 # display settings
 _WIDTH = const(240)
@@ -14,12 +16,6 @@ _MOSI = const(13)
 #_MISO = const(12)
 _SCK = const(14)
 _HOST = const(1)  # SPI2
-
-#define XPT2046_IRQ 36
-#define XPT2046_MOSI 32
-#define XPT2046_MISO 39
-#define XPT2046_CLK 25
-#define XPT2046_CS 33
 
 _LCD_CS = const(15)
 _LCD_FREQ = const(40000000)
@@ -41,10 +37,6 @@ display_bus = lcd_bus.SPIBus(
     cs=_LCD_CS,
 )
 
-
-import ili9341
-import lvgl as lv
-
 display = ili9341.ILI9341(
     data_bus=display_bus,
     display_width=_WIDTH,
@@ -58,8 +50,8 @@ display = ili9341.ILI9341(
     rgb565_byte_swap=True
 )
 
-import task_handler  # NOQA
-import xpt2046  # NOQA
+import task_handler
+th = task_handler.TaskHandler()
 
 display.set_power(True)
 display.init(1)
@@ -67,32 +59,30 @@ display.set_color_inversion(False)
 display.set_rotation(lv.DISPLAY_ROTATION._90)
 display.set_backlight(100)
 
-th = task_handler.TaskHandler()
 
 scrn = lv.screen_active()
 
-tabview = lv.tabview(scrn)
-tabview.set_tab_bar_size(30)
+# Fallback: Create a simple pattern using objects
+# Create colorful rectangles as objects instead
+colors = [0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0xFF00FF, 0x00FFFF]
 
-tab1 = tabview.add_tab("SemiBlock")
-tab2 = tabview.add_tab("Multimeter")
-tab3 = tabview.add_tab("Oscilloscope")
+for i, color in enumerate(colors):
+    rect = lv.obj(scrn)
+    rect.set_size(40, 40)
+    
+    # Position in 3x2 grid
+    x = (i % 3) * 50 - 50  # Center around screen
+    y = (i // 3) * 50 - 25
+    rect.align(lv.ALIGN.CENTER, x, y)
+    
+    # Set color
+    rect.set_style_bg_color(lv.color_hex(color), 0)
+    rect.set_style_bg_opa(lv.OPA.COVER, 0)
+    rect.set_style_border_width(0, 0)  # No border
 
-# Test colors
-colors = [
-    (lv.color_hex(0xFF0000), "Red"),  # Pure red
-    (lv.color_hex(0x00FF00), "Green"),  # Pure green
-    (lv.color_hex(0x0000FF), "Blue"),  # Pure blue
-    (lv.color_hex(0xFFFFFF), "White"),  # White
-    (lv.color_hex(0x000000), "Black")   # Black
-]
-for i, (color, name) in enumerate(colors):
-    rect = lv.obj(tab1)
-    rect.set_size(30, 30)
-    rect.set_style_bg_color(color, 0)
-    rect.set_style_bg_opa(255, 0)
-    rect.align(lv.ALIGN.TOP_LEFT, 10, 10 + i * 35)
-    label = lv.label(tab1)
-    label.set_text(name)
-    label.align_to(rect, lv.ALIGN.OUT_RIGHT_MID, 10, 0)
+# Add a label to show status
+label1 = lv.label(scrn)
+label1.set_text("Colorful Pattern (Fallback)")
+label1.align(lv.ALIGN.TOP_MID, 0, 10)
 
+sleep(2)

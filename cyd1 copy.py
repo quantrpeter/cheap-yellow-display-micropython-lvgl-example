@@ -1,7 +1,10 @@
 import lcd_bus
 from micropython import const
 import machine
-
+import ili9341
+import lvgl as lv
+import task_handler  # NOQA
+import xpt2046  # NOQA
 
 # display settings
 _WIDTH = const(240)
@@ -35,11 +38,6 @@ display_bus = lcd_bus.SPIBus(
     cs=_LCD_CS,
 )
 
-
-import ili9341
-import lvgl as lv
-
-
 display = ili9341.ILI9341(
     data_bus=display_bus,
     display_width=_WIDTH,
@@ -53,8 +51,6 @@ display = ili9341.ILI9341(
     rgb565_byte_swap=True
 )
 
-import task_handler  # NOQA
-import xpt2046  # NOQA
 
 display.set_power(True)
 display.init(1)
