@@ -2,7 +2,7 @@ from PIL import Image
 import numpy as np
 
 # Load the PNG image
-img = Image.open('colorful@4x.png').convert('RGB')
+img = Image.open('colorful.png').convert('RGB')
 
 # Resize if needed (e.g., to 240x320)
 img = img.resize((240, 320))

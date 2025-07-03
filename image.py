@@ -58,13 +58,8 @@ display.set_backlight(100)
 
 scrn = lv.screen_active()
 
-label1 = lv.label(scrn)
-label1.set_text("Colorful Canvas Pattern")
-label1.align(lv.ALIGN.TOP_MID, 0, 10)
-
-# Use LVGL's file system image support to avoid loading the whole file into RAM
 img = lv.image(scrn)
-img.set_src("colorful.bin")
+img.set_src("colorful.png")
 img.set_size(200, 200)
 img.center()
 
