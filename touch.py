@@ -84,7 +84,6 @@ semiblock_label.align(lv.ALIGN.TOP_MID, -45, 20)
 semiblock_label.set_style_text_color(lv.color_hex(0xFF80C0), 0)  # Pinkly blue color
 semiblock_label.set_style_transform_scale(600, 0)  # Scale text to 200% (2x bigger)
 
-
 import task_handler
 th = task_handler.TaskHandler()
 
