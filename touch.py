@@ -53,7 +53,7 @@ display = ili9341.ILI9341(
     rgb565_byte_swap=True,
 )
  
-display.set_power(True)
+# display.set_power(True)
 display.init(1)
 display.set_rotation(lv.DISPLAY_ROTATION._90)
 display.set_backlight(100)
