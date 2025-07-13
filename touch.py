@@ -87,19 +87,20 @@ semiblock_label.align(lv.ALIGN.TOP_MID, -45, 20)
 semiblock_label.set_style_text_color(lv.color_hex(0xFF80C0), 0)  # Pinkly blue color
 semiblock_label.set_style_transform_scale(600, 0)  # Scale text to 200% (2x bigger)
 
-
+count=0
 def event_cb(e):
 	print("Clicked", e)
 	btn = e.get_target_obj()
 	label = btn.get_child(0)
-	label.set_text("Peter")
+	count+=1
+	label.set_text(str(count))
       
 btn = lv.button(scrn)
 btn.set_size(100, 50)
 btn.center()
 btn.add_event_cb(event_cb, lv.EVENT.CLICKED | lv.EVENT.PRESSED | lv.EVENT.RELEASED, None)
 label = lv.label(btn)
-label.set_text("Click me!")
+label.set_text(str(count))
 label.center()
 
 # import task_handler
