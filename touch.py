@@ -70,11 +70,10 @@ touch_dev = machine.SPI.Device(
    cs=_TOUCH_CS,
 )
  
-indev = xpt2046.XPT2046(touch_dev,debug=True,startup_rotation=lv.DISPLAY_ROTATION._90)
+indev = xpt2046.XPT2046(touch_dev,debug=False,startup_rotation=lv.DISPLAY_ROTATION._90)
 
-# if not indev.is_calibrated:
-indev.calibrate()
-
+if not indev.is_calibrated:
+	indev.calibrate()
 
 display.set_rotation(lv.DISPLAY_ROTATION._90)
 
@@ -89,12 +88,11 @@ semiblock_label.set_style_text_color(lv.color_hex(0xFF80C0), 0)  # Pinkly blue c
 semiblock_label.set_style_transform_scale(600, 0)  # Scale text to 200% (2x bigger)
 
 
-def event_cb(self,e):
+def event_cb(e):
 	print("Clicked", e)
-	# btn = e.get_target_obj()
-	# label = btn.get_child(0)
-	# # label.set_text(str(self.cnt))
-	# label.set_text("Peter")
+	btn = e.get_target_obj()
+	label = btn.get_child(0)
+	label.set_text("Peter")
       
 btn = lv.button(scrn)
 btn.set_size(100, 50)
@@ -104,10 +102,10 @@ label = lv.label(btn)
 label.set_text("Click me!")
 label.center()
 
-import task_handler
-th = task_handler.TaskHandler()
+# import task_handler
+# th = task_handler.TaskHandler()
 
-# while True:
-#     time.sleep_ms(10)
-#     lv.tick_inc(10)
-#     lv.task_handler()
+while True:
+    time.sleep_ms(10)
+    lv.tick_inc(10)
+    lv.task_handler()
