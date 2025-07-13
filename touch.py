@@ -89,12 +89,13 @@ semiblock_label.set_style_transform_scale(600, 0)  # Scale text to 200% (2x bigg
 
 count=0
 def event_cb(e):
+	global count
 	print("Clicked", e)
 	btn = e.get_target_obj()
 	label = btn.get_child(0)
 	count+=1
 	label.set_text(str(count))
-      
+
 btn = lv.button(scrn)
 btn.set_size(100, 50)
 btn.center()
