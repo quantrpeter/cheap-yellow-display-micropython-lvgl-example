@@ -20,8 +20,8 @@ except ImportError:
     print("network not available")
 
 # WiFi Configuration - CHANGE THESE TO YOUR WIFI CREDENTIALS
-# WIFI_SSID = "Quantr 2.4G"
-# WIFI_PASSWORD = "quantrwi"
+#WIFI_SSID = "Quantr 2.4G"
+#WIFI_PASSWORD = "quantrwi"
 WIFI_SSID = "peter 2.4G"
 WIFI_PASSWORD = "peter1234"
 
