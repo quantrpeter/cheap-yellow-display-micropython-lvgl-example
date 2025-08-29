@@ -4,6 +4,7 @@ import machine
 import ili9341
 import lvgl as lv
 from time import sleep
+from fs_driver import fs_register
 
 # display settings
 _WIDTH = const(240)
@@ -24,10 +25,10 @@ _LCD_FREQ = const(40000000)
 #_TOUCH_FREQ = const(1000000)
 
 spi_bus = machine.SPI.Bus(
-    host=_HOST,
-    mosi=_MOSI,
-    #miso=_MISO,
-    sck=_SCK
+	host=_HOST,
+	mosi=_MOSI,
+	#miso=_MISO,
+	sck=_SCK
 )
 
 display_bus = lcd_bus.SPIBus(
@@ -58,10 +59,18 @@ display.set_backlight(100)
 
 scrn = lv.screen_active()
 
-img = lv.image(scrn)
-img.set_src("colorful.png")
-img.set_size(200, 200)
-img.center()
+fs_drv = lv.fs_drv_t()
+fs_register(fs_drv, "S")
+
+# img = lv.image(scrn)
+# img.set_src("S:colorful.png")  # this image too large, unable to run in CYD
+# img.set_size(320, 240)
+# img.set_pos(0, 5)
+# img.center()
+
+img.set_src("S:colorful20.png")
+img.set_size(20, 20)
+img.set_pos(0, 5)
 
 import task_handler
 task_handler.TaskHandler()
