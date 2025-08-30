@@ -44,9 +44,9 @@ _HOST = const(1)  # SPI2
  
 _LCD_CS = const(15)
 _LCD_FREQ = const(40000000)
- 
-#_TOUCH_CS = const(9)
-#_TOUCH_FREQ = const(1000000)
+
+_TOUCH_CS = const(33)
+_TOUCH_FREQ = const(10_000_000)
  
 spi_bus = machine.SPI.Bus(
     host=_HOST,

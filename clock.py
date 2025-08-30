@@ -46,8 +46,8 @@ _HOST = const(1)  # SPI2
 _LCD_CS = const(15)
 _LCD_FREQ = const(40000000)
  
-#_TOUCH_CS = const(9)
-#_TOUCH_FREQ = const(1000000)
+_TOUCH_CS = const(33)
+_TOUCH_FREQ = const(10_000_000)
  
 spi_bus = machine.SPI.Bus(
     host=_HOST,
@@ -70,7 +70,7 @@ display = ili9341.ILI9341(
     data_bus=display_bus,
     display_width=_WIDTH,
     display_height=_HEIGHT,
-     reset_pin=_RST,
+    reset_pin=_RST,
     reset_state=ili9341.STATE_LOW,
     backlight_pin=_BL,
     backlight_on_state=ili9341.STATE_HIGH,
@@ -87,16 +87,22 @@ display.init(1)
 # display.set_color_inversion(True)
 display.set_rotation(lv.DISPLAY_ROTATION._270)
 display.set_backlight(100)
+
+spi_bus_touch = machine.SPI.Bus(
+    host=2,
+    mosi=32,
+    miso=39,
+    sck=25
+)
+
+touch_dev = machine.SPI.Device(
+   spi_bus=spi_bus_touch,
+   freq=_TOUCH_FREQ,
+   cs=_TOUCH_CS,
+)
  
-#touch_dev = machine.SPI.Device(
-#    spi_bus=spi_bus,
-#    freq=_TOUCH_FREQ,
-#    cs=_TOUCH_CS
-#)
- 
-#indev = xpt2046.XPT2046(touch_dev,debug=False,startup_rotation=lv.DISPLAY_ROTATION._0)
- 
-#indev.calibrate()
+indev = xpt2046.XPT2046(touch_dev,debug=False,startup_rotation=lv.DISPLAY_ROTATION._0)
+# indev.calibrate()
  
 th = task_handler.TaskHandler()
 
@@ -220,23 +226,30 @@ def setup_time():
 
 # Initialize time
 setup_time()
- 
+
 scrn = lv.screen_active()
+scrn.set_style_bg_color(lv.color_hex(0xFFFFFF), 0)  # White background
 
 # Set background image
-try:
-    fs_drv = lv.fs_drv_t()
-    fs_register(fs_drv, "S")
-    bg_img = lv.image(scrn)
-    # bg_img.set_src("S:colorful20.png")
-    bg_img.set_src("S:clock1.png")
-    # bg_img.set_size(140, 140)
-    bg_img.set_pos(0, 0)
-    # bg_img.align(lv.ALIGN.CENTER, 0, 0)
-    # bg_img.set_zoom(256)  # 256 = 1x zoom
-    # bg_img.set_style_opa(lv.OPA.COVER, 0)
-except Exception as e:
-    print("Failed to load background image:", e)
+# try:
+#     fs_drv = lv.fs_drv_t()
+#     fs_register(fs_drv, "S")
+#     bg_img = lv.image(scrn)
+#     # bg_img.set_src("S:colorful20.png")
+#     bg_img.set_src("S:clock1.png")
+#     # bg_img.set_size(140, 140)
+#     bg_img.set_pos(0, 0)
+#     # bg_img.align(lv.ALIGN.CENTER, 0, 0)
+#     # bg_img.set_zoom(256)  # 256 = 1x zoom
+#     # bg_img.set_style_opa(lv.OPA.COVER, 0)
+# except Exception as e:
+#     print("Failed to load background image:", e)
+
+def btnm_event_handler(e, scrn):
+    """Handle button matrix events"""
+    obj = e.get_target()
+    txt = obj.get_button_text(obj.get_selected_button())
+    print(f"Button pressed: {txt}")
 
 btnm = lv.buttonmatrix(scrn)
 btnm.add_event_cb(lambda e: btnm_event_handler(e,scrn),lv.EVENT.VALUE_CHANGED, None)
