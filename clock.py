@@ -230,90 +230,90 @@ try:
     bg_img = lv.image(scrn)
     # bg_img.set_src("S:colorful20.png")
     bg_img.set_src("S:clock1.png")
-    bg_img.set_size(240, 240)
-    bg_img.set_pos(0, 5)
+    # bg_img.set_size(140, 140)
+    bg_img.set_pos(0, 0)
     # bg_img.align(lv.ALIGN.CENTER, 0, 0)
     # bg_img.set_zoom(256)  # 256 = 1x zoom
     # bg_img.set_style_opa(lv.OPA.COVER, 0)
 except Exception as e:
     print("Failed to load background image:", e)
 
-#btnm = lv.buttonmatrix(scrn)
-#btnm.add_event_cb(lambda e: btnm_event_handler(e,scrn),lv.EVENT.VALUE_CHANGED, None)
-#btnm.set_size(230,120)
-#btnm.align(1,5,5)
+btnm = lv.buttonmatrix(scrn)
+btnm.add_event_cb(lambda e: btnm_event_handler(e,scrn),lv.EVENT.VALUE_CHANGED, None)
+btnm.set_size(230,120)
+btnm.align(1,5,5)
 
-# # SemiBlock label at the top
-# semiblock_label = lv.label(scrn)
-# semiblock_label.set_text("SemiBlock")
-# semiblock_label.align(lv.ALIGN.TOP_MID, -45, 20)
-# semiblock_label.set_style_text_color(lv.color_hex(0xFF80C0), 0)  # Pinkly blue color
-# semiblock_label.set_style_transform_scale(600, 0)  # Scale text to 200% (2x bigger)
+# SemiBlock label at the top
+semiblock_label = lv.label(scrn)
+semiblock_label.set_text("SemiBlock")
+semiblock_label.align(lv.ALIGN.TOP_MID, -45, 20)
+semiblock_label.set_style_text_color(lv.color_hex(0xFF80C0), 0)  # Pinkly blue color
+semiblock_label.set_style_transform_scale(600, 0)  # Scale text to 200% (2x bigger)
 
-# # Digital clock display - large font
-# clock_label = lv.label(scrn)
-# clock_label.set_text("00:00:00")
-# clock_label.align(lv.ALIGN.LEFT_MID, 50, -15)
-# clock_label.set_style_transform_scale(500, 0)  # Scale text to 300% (3x bigger)
-# clock_label.set_style_text_color(lv.color_hex(0x000000), 0)  # Black color
+# Digital clock display - large font
+clock_label = lv.label(scrn)
+clock_label.set_text("00:00:00")
+clock_label.align(lv.ALIGN.LEFT_MID, 50, -15)
+clock_label.set_style_transform_scale(500, 0)  # Scale text to 300% (3x bigger)
+clock_label.set_style_text_color(lv.color_hex(0x000000), 0)  # Black color
 
-# # Date display
-# date_label = lv.label(scrn)
-# date_label.set_text("2025-01-01")
-# date_label.align(lv.ALIGN.LEFT_MID, 50, 30)
-# date_label.set_style_transform_scale(500, 0)
-# date_label.set_style_text_color(lv.color_hex(0x0000FF), 0)  # Blue color
+# Date display
+date_label = lv.label(scrn)
+date_label.set_text("2025-01-01")
+date_label.align(lv.ALIGN.LEFT_MID, 50, 30)
+date_label.set_style_transform_scale(500, 0)
+date_label.set_style_text_color(lv.color_hex(0x0000FF), 0)  # Blue color
 
-# # Day of week display
-# day_label = lv.label(scrn)
-# day_label.set_text("Monday")
-# day_label.align(lv.ALIGN.LEFT_MID, 50, 75)
-# day_label.set_style_transform_scale(500, 0)
-# day_label.set_style_text_color(lv.color_hex(0x0000FF), 0)  # Blue color
+# Day of week display
+day_label = lv.label(scrn)
+day_label.set_text("Monday")
+day_label.align(lv.ALIGN.LEFT_MID, 50, 75)
+day_label.set_style_transform_scale(500, 0)
+day_label.set_style_text_color(lv.color_hex(0x0000FF), 0)  # Blue color
 
-# # Clock frame/border
-# clock_frame = lv.obj(scrn)
-# clock_frame.set_size(280, 140)
-# clock_frame.align(lv.ALIGN.CENTER, 0, 40)
-# clock_frame.set_style_border_width(2, 0)
-# clock_frame.set_style_border_color(lv.color_hex(0xFF80C0), 0)  # Gray border
-# clock_frame.set_style_bg_opa(lv.OPA.TRANSP, 0)  # Transparent background
-# clock_frame.set_style_radius(10, 0)  # Rounded corners
+# Clock frame/border
+clock_frame = lv.obj(scrn)
+clock_frame.set_size(280, 140)
+clock_frame.align(lv.ALIGN.CENTER, 0, 40)
+clock_frame.set_style_border_width(2, 0)
+clock_frame.set_style_border_color(lv.color_hex(0xFF80C0), 0)  # Gray border
+clock_frame.set_style_bg_opa(lv.OPA.TRANSP, 0)  # Transparent background
+clock_frame.set_style_radius(10, 0)  # Rounded corners
 
-# # Don't move labels to frame - keep them on main screen for proper updates
+# Don't move labels to frame - keep them on main screen for proper updates
 
-# def update_clock():
-#     """Update the clock display with current time in Hong Kong timezone"""
-#     # Use Hong Kong local time instead of system time
-#     current_time = get_local_time()
+def update_clock():
+    """Update the clock display with current time in Hong Kong timezone"""
+    # Use Hong Kong local time instead of system time
+    current_time = get_local_time()
     
-#     # Format time as HH:MM:SS
-#     time_str = "{:02d}:{:02d}:{:02d}".format(
-#         current_time[3],  # hour
-#         current_time[4],  # minute
-#         current_time[5]   # second
-#     )
+    # Format time as HH:MM:SS
+    time_str = "{:02d}:{:02d}:{:02d}".format(
+        current_time[3],  # hour
+        current_time[4],  # minute
+        current_time[5]   # second
+    )
     
-#     # Format date as YYYY-MM-DD
-#     date_str = "{:04d}-{:02d}-{:02d}".format(
-#         current_time[0],  # year
-#         current_time[1],  # month
-#         current_time[2]   # day
-#     )
+    # Format date as YYYY-MM-DD
+    date_str = "{:04d}-{:02d}-{:02d}".format(
+        current_time[0],  # year
+        current_time[1],  # month
+        current_time[2]   # day
+    )
     
-#     # Get day of week
-#     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-#     day_str = days[current_time[6]]
+    # Get day of week
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    day_str = days[current_time[6]]
     
-#     clock_label.set_text(time_str)
-#     date_label.set_text(date_str)
-#     day_label.set_text(day_str)
+    clock_label.set_text(time_str)
+    date_label.set_text(date_str)
+    day_label.set_text(day_str)
     
-#     # Debug print to verify time is being read correctly
-#     print(f"{TIMEZONE_NAME} Time: {time_str}, Date: {date_str}, Day: {day_str}")
+    # Debug print to verify time is being read correctly
+    print(f"{TIMEZONE_NAME} Time: {time_str}, Date: {date_str}, Day: {day_str}")
 
-# # Create a timer to update the clock every second
-# clock_timer = lv.timer_create(lambda timer: update_clock(), 1000, None)
+# Create a timer to update the clock every second
+clock_timer = lv.timer_create(lambda timer: update_clock(), 1000, None)
 
-# # Initial clock update
-# update_clock()
+# Initial clock update
+update_clock()
