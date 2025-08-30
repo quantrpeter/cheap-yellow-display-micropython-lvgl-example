@@ -231,19 +231,19 @@ scrn = lv.screen_active()
 scrn.set_style_bg_color(lv.color_hex(0xFFFFFF), 0)  # White background
 
 # Set background image
-# try:
-#     fs_drv = lv.fs_drv_t()
-#     fs_register(fs_drv, "S")
-#     bg_img = lv.image(scrn)
-#     # bg_img.set_src("S:colorful20.png")
-#     bg_img.set_src("S:clock1.png")
-#     # bg_img.set_size(140, 140)
-#     bg_img.set_pos(0, 0)
-#     # bg_img.align(lv.ALIGN.CENTER, 0, 0)
-#     # bg_img.set_zoom(256)  # 256 = 1x zoom
-#     # bg_img.set_style_opa(lv.OPA.COVER, 0)
-# except Exception as e:
-#     print("Failed to load background image:", e)
+try:
+    fs_drv = lv.fs_drv_t()
+    fs_register(fs_drv, "S")
+    bg_img = lv.image(scrn)
+    # bg_img.set_src("S:colorful20.png")
+    bg_img.set_src("S:clock1.png")
+    # bg_img.set_size(140, 140)
+    bg_img.set_pos(10, 10)
+    # bg_img.align(lv.ALIGN.CENTER, 0, 0)
+    # bg_img.set_zoom(256)  # 256 = 1x zoom
+    # bg_img.set_style_opa(lv.OPA.COVER, 0)
+except Exception as e:
+    print("Failed to load background image:", e)
 
 def btnm_event_handler(e, scrn):
     """Handle button matrix events"""
@@ -251,10 +251,11 @@ def btnm_event_handler(e, scrn):
     txt = obj.get_button_text(obj.get_selected_button())
     print(f"Button pressed: {txt}")
 
-btnm = lv.buttonmatrix(scrn)
-btnm.add_event_cb(lambda e: btnm_event_handler(e,scrn),lv.EVENT.VALUE_CHANGED, None)
-btnm.set_size(230,120)
-btnm.align(1,5,5)
+# Comment out button matrix to remove btn1-btn5 display
+# btnm = lv.buttonmatrix(scrn)
+# btnm.add_event_cb(lambda e: btnm_event_handler(e,scrn),lv.EVENT.VALUE_CHANGED, None)
+# btnm.set_size(230,120)
+# btnm.align(1,5,5)
 
 # SemiBlock label at the top
 semiblock_label = lv.label(scrn)
